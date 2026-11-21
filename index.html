@@ -326,16 +326,16 @@
         tctx.lineTo(mid - half, mid);
         tctx.closePath();
         tctx.fill();
-      } else if (currentPattern === 'hex') {
-        const w = size * 1.5;
-        const h = Math.round(size * Math.sqrt(3));
-        tile.width = Math.max(16, Math.round(w * 2));
-        tile.height = Math.max(16, h);
+            } else if (currentPattern === 'hex') {
+        const r = size * 0.5;
+        const hexH = Math.round(r * Math.sqrt(3));
+        tile.width = Math.round(r * 3);
+        tile.height = Math.max(12, hexH * 2);
         tctx.fillStyle = sec;
         tctx.fillRect(0, 0, tile.width, tile.height);
         tctx.strokeStyle = pri;
         tctx.lineWidth = Math.max(1.5, size * 0.22 * weight);
-        const r = size * 0.5;
+        tctx.lineJoin = 'round';
         const drawHex = (cx, cy) => {
           tctx.beginPath();
           for (let a = 0; a < 6; a++) {
@@ -348,9 +348,13 @@
           tctx.closePath();
           tctx.stroke();
         };
-        drawHex(r, h * 0.5);
-        drawHex(r + size * 1.5, 0);
-        drawHex(r + size * 1.5, h);
+        const dx = tile.width * 0.5;
+        const dy = tile.height * 0.5;
+        drawHex(0, 0);
+        drawHex(tile.width, 0);
+        drawHex(0, tile.height);
+        drawHex(tile.width, tile.height);
+        drawHex(dx, dy);
       } else if (currentPattern === 'bricks') {
         tile.width = size * 2;
         tile.height = size;
